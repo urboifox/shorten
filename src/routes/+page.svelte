@@ -1,14 +1,22 @@
-<script>
+<script lang="ts">
     import { enhance } from '$app/forms';
     import { parseErrorMessage } from '$lib/utils';
     import { Link2Icon, LinkIcon, LoaderCircleIcon, TextCursorIcon } from '@lucide/svelte';
     import { toast } from 'svelte-sonner';
+    import type { PageServerData } from './$types.js';
+    import Shorten from '$lib/components/shorten.svelte';
+    import { flip } from 'svelte/animate';
+
+    interface Props {
+        data: PageServerData;
+    }
+    const { data }: Props = $props();
 
     let loading = $state(false);
 </script>
 
 <div class="container">
-    <main class="flex min-h-screen flex-col items-center justify-center gap-6">
+    <main class="flex flex-col items-center justify-center gap-6 mt-[30svh]">
         <div class="relative flex flex-col items-center gap-2">
             <LinkIcon class="text-primary absolute -top-20 -left-10" size={64} />
             <Link2Icon class="text-primary absolute -top-20 -right-10 rotate-12" size={64} />
@@ -16,7 +24,7 @@
                 class="text-primary absolute -right-20 -bottom-20 rotate-12"
                 size={64}
             />
-            <h1 class="text-primary text-3xl font-semibold lg:text-5xl">
+            <h1 class="text-primary text-center text-3xl font-semibold lg:text-5xl">
                 Shorten - Create a short link
             </h1>
             <p class="text-foreground max-w-2xl text-center">
@@ -60,5 +68,13 @@
                 {/if}
             </button>
         </form>
+
+        <ul class="mt-4 flex w-full flex-col items-center gap-2">
+            {#each data.uris as uri (uri.short_url)}
+                <li class="w-full" animate:flip={{ duration: 200 }}>
+                    <Shorten code={uri.short_url} />
+                </li>
+            {/each}
+        </ul>
     </main>
 </div>

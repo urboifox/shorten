@@ -2,9 +2,9 @@ import { fetcher } from '$lib/server/fetcher';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ fetch }) => {
-    // const uris = await fetcher<BaseResponse<{ uris: string[] }>>(fetch, '/api/uris');
+    const uris = await fetcher<BaseResponse<{ short_url: string }[]>>(fetch, '/api/uris');
 
-    return { uris: [] };
+    return { uris: uris.data };
 };
 
 export const actions = {
@@ -16,8 +16,6 @@ export const actions = {
             env: 'action',
             body: { url: data.get('url') }
         });
-
-        console.log('res', res);
 
         return res;
     }

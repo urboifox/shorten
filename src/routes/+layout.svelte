@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { Toaster } from 'svelte-sonner';
     import '../app.css';
 
     let { children } = $props();
@@ -8,4 +9,5 @@
     <title>Shorten</title>
 </svelte:head>
 
+<Toaster position="bottom-right" />
 {@render children()}
