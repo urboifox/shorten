@@ -14,10 +14,10 @@ export const actions = {
         const res = await fetcher(fetch, '/api/uris', {
             method: 'POST',
             env: 'action',
-            body: {
-                url: data.get('url')
-            }
+            body: { url: data.get('url') }
         });
+
+        console.log('res', res);
 
         return res;
     }

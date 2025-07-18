@@ -29,11 +29,11 @@
             class="relative w-full max-w-2xl"
             method="post"
             action="?/shorten"
-            use:enhance={() => {
+            use:enhance={({formData}) => {
                 loading = true;
                 return async ({ update, result }) => {
                     loading = false;
-                    await update();
+                    await update({ reset: true });
                     if (result.type === 'success') {
                         toast.success('Shorten success!');
                     } else if (result.type === 'failure') {
@@ -43,6 +43,7 @@
             }}
         >
             <input
+                name="url"
                 type="text"
                 placeholder="Paste or enter a URL to shorten it!"
                 class="bg-primary/5 caret-primary focus:ring-primary w-full rounded-2xl px-6 py-4 ring-1 ring-transparent transition-all duration-200 outline-none"

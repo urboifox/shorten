@@ -6,11 +6,11 @@ export function endpoint(
     params?: Record<string, string | number | boolean | undefined | null>
 ) {
     const apiBase = new URL(API_URL);
-    apiBase.pathname = apiBase.pathname.replace(/\/$/, '') + '/api/v1';
+    apiBase.pathname = apiBase.pathname.replace(/\/$/, '');
 
     const [rawPath, rawQuery] = path.split('?');
     const fullPath = rawPath.replace(/^\/+/, '');
-    apiBase.pathname += '/' + fullPath;
+    apiBase.pathname += fullPath;
 
     const searchParams = new URLSearchParams(rawQuery);
     if (params) {
