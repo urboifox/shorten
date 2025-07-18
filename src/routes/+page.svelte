@@ -1,7 +1,7 @@
 <script>
     import { enhance } from '$app/forms';
     import { parseErrorMessage } from '$lib/utils';
-    import { Link2Icon, LinkIcon, TextCursorIcon } from '@lucide/svelte';
+    import { Link2Icon, LinkIcon, LoaderCircleIcon, TextCursorIcon } from '@lucide/svelte';
     import { toast } from 'svelte-sonner';
 
     let loading = $state(false);
@@ -29,7 +29,7 @@
             class="relative w-full max-w-2xl"
             method="post"
             action="?/shorten"
-            use:enhance={({formData}) => {
+            use:enhance={() => {
                 loading = true;
                 return async ({ update, result }) => {
                     loading = false;
@@ -51,9 +51,13 @@
             <button
                 type="submit"
                 disabled={loading}
-                class="bg-primary hover:bg-primary/90 absolute end-2 top-1/2 -translate-y-1/2 cursor-pointer rounded-xl px-4 py-2.5 text-white transition-colors disabled:cursor-not-allowed"
+                class="bg-primary hover:bg-primary/90 absolute end-2 top-1/2 flex min-w-24 -translate-y-1/2 cursor-pointer items-center justify-center rounded-xl px-4 py-2.5 text-white transition-colors disabled:cursor-not-allowed"
             >
-                Shorten!
+                {#if loading}
+                    <LoaderCircleIcon class="animate-spin" size={24} />
+                {:else}
+                    Shorten!
+                {/if}
             </button>
         </form>
     </main>
